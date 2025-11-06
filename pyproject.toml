@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "ArtemisAI", email = "dev@artemisai.com"}
+    {name = "ArtemisAI", email = "daniel@artemis-ai.ca"}
 ]
 keywords = [
     "mcp",

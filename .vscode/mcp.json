@@ -8,8 +8,7 @@
         "-i",
         "litellm_mcp",
         "python",
-        "-m",
-        "mcp_server"
+        "__main__.py"
       ],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",

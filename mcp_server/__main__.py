@@ -8,10 +8,11 @@ from typing import Any
 
 import httpx
 from mcp.server import Server
+from mcp.server.stdio import stdio_server
 from mcp.types import TextContent, Tool
 
 # Initialize MCP server
-server = Server("litellm-manager")
+app = Server("litellm-manager")
 
 # Configuration from environment
 LITELLM_API_BASE = os.getenv("LITELLM_API_BASE", "http://localhost:4001")
@@ -24,9 +25,8 @@ def log_debug(message: str):
     if DEBUG:
         print(f"[DEBUG] {message}", file=sys.stderr)
 
-
 # Tool definitions
-@server.list_tools()
+@app.list_tools()
 async def list_tools() -> list[Tool]:
     """List available tools for LiteLLM management"""
     return [
@@ -88,7 +88,7 @@ async def list_tools() -> list[Tool]:
     ]
 
 
-@server.call_tool()
+@app.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[TextContent]:
     """Handle tool calls from the client"""
     log_debug(f"Tool called: {name} with args: {arguments}")
@@ -173,10 +173,16 @@ async def main():
     log_debug(f"LiteLLM API Base: {LITELLM_API_BASE}")
     log_debug(f"Debug mode: {DEBUG}")
 
-    async with server:
+    # Run the server on stdin/stdout using stdio
+    async with stdio_server() as (read_stream, write_stream):
         log_debug("Server ready and listening on stdio")
-        await asyncio.sleep(float("inf"))
+        await app.run(read_stream, write_stream, app.create_initialization_options())
+
+
+def run():
+    """Entry point to run the server"""
+    asyncio.run(main())
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    run()

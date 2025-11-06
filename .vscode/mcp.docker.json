@@ -2,8 +2,14 @@
   "servers": {
     "litellm-manager": {
       "type": "stdio",
-      "command": "node",
-      "args": ["C:\\Users\\Laptop\\Desktop\\Projects\\LiteLLM\\.mcp\\LiteLLM_MCP\\dist\\index.js"],
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "litellm_mcp",
+        "node",
+        "dist/index.js"
+      ],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",
         "LITELLM_MASTER_KEY": "sk-rQW44mXGQ1rPc3vHoHQ7_w",

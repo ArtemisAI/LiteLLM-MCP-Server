@@ -95,7 +95,7 @@ const TOOLS: Tool[] = [
 async function handleToolCall(
   name: string,
   args: Record<string, unknown>
-): Promise<{ content: Array<{ type: string; text: string }> }> {
+): Promise<{ content: Array<{ type: "text"; text: string }> }> {
   logDebug(`Tool called: ${name} with args: ${JSON.stringify(args)}`);
 
   const headers: Record<string, string> = {};
@@ -123,7 +123,10 @@ async function handleToolCall(
       }
 
       case "get_model_info": {
-        const model = args.model as string;
+        if (typeof args.model !== "string") {
+          throw new Error("model parameter must be a string");
+        }
+        const model = args.model;
         const response = await axios.get(
           `${LITELLM_API_BASE}/models/${model}`,
           {
@@ -142,8 +145,14 @@ async function handleToolCall(
       }
 
       case "create_virtual_key": {
-        const keyAlias = args.key_alias as string;
-        const userId = args.user_id as string;
+        if (typeof args.key_alias !== "string") {
+          throw new Error("key_alias parameter must be a string");
+        }
+        if (typeof args.user_id !== "string") {
+          throw new Error("user_id parameter must be a string");
+        }
+        const keyAlias = args.key_alias;
+        const userId = args.user_id;
         const response = await axios.post(
           `${LITELLM_API_BASE}/key/generate`,
           {
@@ -170,7 +179,10 @@ async function handleToolCall(
       }
 
       case "get_spend": {
-        const userId = args.user_id as string;
+        if (typeof args.user_id !== "string") {
+          throw new Error("user_id parameter must be a string");
+        }
+        const userId = args.user_id;
         const response = await axios.get(`${LITELLM_API_BASE}/spend`, {
           headers,
           params: { user_id: userId },

@@ -2,18 +2,14 @@ FROM node:18-slim
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-COPY tsconfig.json ./
+# Copy package file only (no package-lock to avoid npm bugs in Docker)
+COPY package.json ./
 
-# Install dependencies
-RUN npm ci
+# Install production dependencies
+RUN npm install --omit=dev
 
-# Copy source code
-COPY src/ ./src/
+# Copy pre-built application
+COPY dist/ ./dist/
 
-# Build TypeScript
-RUN npm run build
-
-# Run as stdio server
+# Run the server
 CMD ["node", "dist/index.js"]

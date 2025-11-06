@@ -2,29 +2,33 @@
 
 ## Prerequisites
 
-- Docker & Docker Compose
+- Node.js 18+ (for local development) OR Docker & Docker Compose (for containerized deployment)
 - Running LiteLLM instance (v1.79.0+)
-- PostgreSQL 15+
-- Redis 7+
-- Network connectivity between services
 - VSCode with MCP support
 
-## Local Development Deployment
+## Local Development (Recommended)
 
-### 1. Build the MCP Server Image
+### 1. Install Dependencies
 
 ```bash
 cd LiteLLM-MCP-Server
-docker build -f mcp_server/Dockerfile -t litellm_mcp:latest .
+npm install
+```
+
+### 2. Build TypeScript
+
+```bash
+npm run build
 ```
 
 Verify the build:
 
 ```bash
-docker images | grep litellm_mcp
+ls -la dist/
+# Should show index.js and other compiled files
 ```
 
-### 2. Configure Environment
+### 3. Configure Environment
 
 Copy the example configuration:
 
@@ -32,22 +36,26 @@ Copy the example configuration:
 cp .vscode/mcp.json.example .vscode/mcp.json
 ```
 
-Edit `.vscode/mcp.json` with your LiteLLM proxy details:
+Edit `.vscode/mcp.json` for local Node.js execution:
 
 ```json
 {
   "servers": {
     "litellm-manager": {
       "type": "stdio",
-      "command": "docker",
-      "args": ["exec", "-i", "litellm_mcp", "python", "__main__.py"],
+      "command": "node",
+      "args": ["/absolute/path/to/LiteLLM-MCP-Server/dist/index.js"],
       "env": {
-        "LITELLM_API_BASE": "http://litellm-llm-1:4000",
+        "LITELLM_API_BASE": "http://localhost:4001",
         "LITELLM_MASTER_KEY": "sk-your-actual-key",
-        "DATABASE_URL": "postgresql://user:pass@db:5432/litellm_db",
-        "REDIS_HOST": "redis",
-        "REDIS_PORT": "6379",
-        "REDIS_PASSWORD": "your-redis-password",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+**Note:** Replace `/absolute/path/to/` with the actual path to your cloned repository.
         "DEBUG": "false"
       }
     }

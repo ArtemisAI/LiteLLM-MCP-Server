@@ -7,16 +7,12 @@
         "exec",
         "-i",
         "litellm_mcp",
-        "python",
-        "__main__.py"
+        "node",
+        "dist/index.js"
       ],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",
         "LITELLM_MASTER_KEY": "your-master-key-here",
-        "DATABASE_URL": "postgresql://user:password@localhost:5432/litellm_db",
-        "REDIS_HOST": "localhost",
-        "REDIS_PORT": "6379",
-        "REDIS_PASSWORD": "your-redis-password",
         "DEBUG": "false"
       }
     }

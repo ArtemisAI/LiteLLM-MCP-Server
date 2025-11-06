@@ -1,6 +1,6 @@
 # LiteLLM MCP Server
 
-A powerful Model Context Protocol (MCP) server that enables seamless integration between Claude AI and LiteLLM proxy instances. Manage models, API keys, and monitoring directly through Claude's interface.
+A powerful Model Context Protocol (MCP) server written in TypeScript that enables seamless integration between Claude AI and LiteLLM proxy instances. Manage models, API keys, and monitoring directly through Claude's interface.
 
 ## 🚀 Features
 
@@ -13,7 +13,7 @@ A powerful Model Context Protocol (MCP) server that enables seamless integration
 
 ## 📋 Prerequisites
 
-- Docker & Docker Compose
+- Node.js 18+ or Docker & Docker Compose
 - Running LiteLLM proxy instance (v1.79.0+)
 - PostgreSQL database (for LiteLLM)
 - Redis instance (for caching/rate limiting)
@@ -28,7 +28,14 @@ git clone https://github.com/ArtemisAI/LiteLLM-MCP-Server.git
 cd LiteLLM-MCP-Server
 ```
 
-### 2. Configure Environment
+### 2. Install Dependencies (for local development)
+
+```bash
+npm install
+npm run build
+```
+
+### 3. Configure Environment
 
 Copy the example configuration and update with your credentials:
 
@@ -38,20 +45,17 @@ cp .vscode/mcp.json.example .vscode/mcp.json
 
 Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 
+**For Docker deployment:**
 ```json
 {
   "servers": {
     "litellm-manager": {
       "type": "stdio",
       "command": "docker",
-      "args": ["exec", "-i", "litellm_mcp", "python", "__main__.py"],
+      "args": ["exec", "-i", "litellm_mcp", "node", "dist/index.js"],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",
         "LITELLM_MASTER_KEY": "sk-your-api-key",
-        "DATABASE_URL": "postgresql://user:password@localhost:5432/litellm_db",
-        "REDIS_HOST": "localhost",
-        "REDIS_PORT": "6379",
-        "REDIS_PASSWORD": "your-redis-password",
         "DEBUG": "false"
       }
     }
@@ -59,27 +63,41 @@ Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 }
 ```
 
-### 3. Build Docker Image
-
-```bash
-docker build -f mcp_server/Dockerfile -t litellm_mcp:latest .
+**For local Node.js deployment:**
+```json
+{
+  "servers": {
+    "litellm-manager": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/path/to/LiteLLM-MCP-Server/dist/index.js"],
+      "env": {
+        "LITELLM_API_BASE": "http://localhost:4001",
+        "LITELLM_MASTER_KEY": "sk-your-api-key",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
 ```
 
-### 4. Run Container
+### 4. Build Docker Image (Optional)
+
+```bash
+docker build -t litellm_mcp:latest .
+```
+
+### 5. Run Container (Optional)
 
 ```bash
 docker run -d --name litellm_mcp \
   --network litellm_litellm_network \
   -e LITELLM_API_BASE=http://litellm-llm-1:4000 \
   -e LITELLM_MASTER_KEY=sk-your-key \
-  -e DATABASE_URL="postgresql://user:pass@host:5432/db" \
-  -e REDIS_HOST=localhost \
-  -e REDIS_PORT=6379 \
-  -e REDIS_PASSWORD=your-password \
   litellm_mcp:latest sleep infinity
 ```
 
-### 5. Enable in VSCode
+### 6. Enable in VSCode
 
 The MCP server will automatically connect when configured in `.vscode/mcp.json`. VSCode will discover and register the following tools available in Claude:
 
@@ -151,12 +169,15 @@ Monitor API usage and costs for a specific user.
 
 ```
 LiteLLM-MCP-Server/
-├── mcp_server/
-│   ├── __init__.py              # Package initialization
-│   ├── __main__.py              # MCP server implementation
-│   ├── requirements.txt         # Python dependencies
-│   ├── Dockerfile               # Container build config
-│   └── schema/                  # API schemas
+├── src/
+│   └── index.ts                 # Main TypeScript MCP server implementation
+├── dist/                        # Compiled JavaScript (generated)
+│   └── index.js
+├── mcp_server/                  # Legacy Python implementation (deprecated)
+│   ├── __init__.py
+│   ├── __main__.py
+│   ├── requirements.txt
+│   └── Dockerfile
 ├── .vscode/
 │   ├── mcp.json.example         # Configuration template
 │   └── mcp.json                 # User config (gitignored)
@@ -168,7 +189,10 @@ LiteLLM-MCP-Server/
 ├── DEPLOYMENT.md                # Deployment guide
 ├── LICENSE                      # MIT License
 ├── .gitignore                   # Git ignore rules
-└── pyproject.toml               # Package metadata
+├── package.json                 # Node.js package metadata
+├── tsconfig.json                # TypeScript configuration
+├── Dockerfile                   # Container build config (Node.js)
+└── pyproject.toml               # Legacy Python metadata (deprecated)
 ```
 
 ## 🔐 Security

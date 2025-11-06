@@ -1,0 +1,45 @@
+{
+  "name": "litellm-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for managing LiteLLM proxy instances through Claude AI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "litellm-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "litellm",
+    "api-management",
+    "claude",
+    "ai-assistant"
+  ],
+  "author": "ArtemisAI <daniel@artemis-ai.ca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArtemisAI/LiteLLM-MCP-Server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArtemisAI/LiteLLM-MCP-Server/issues"
+  },
+  "homepage": "https://github.com/ArtemisAI/LiteLLM-MCP-Server#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

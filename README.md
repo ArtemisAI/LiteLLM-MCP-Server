@@ -173,16 +173,15 @@ LiteLLM-MCP-Server/
 │   └── index.ts                 # Main TypeScript MCP server implementation
 ├── dist/                        # Compiled JavaScript (generated)
 │   └── index.js
-├── mcp_server/                  # Legacy Python implementation (deprecated)
-│   ├── __init__.py
-│   ├── __main__.py
-│   ├── requirements.txt
-│   └── Dockerfile
 ├── .vscode/
 │   ├── mcp.json.example         # Configuration template
+│   ├── mcp.docker.json          # Docker configuration template
 │   └── mcp.json                 # User config (gitignored)
 ├── .github/
 │   └── FUNDING.yml              # GitHub sponsorship config
+├── tests/                       # Test plans and documentation
+│   ├── TEST_PLAN.md            # Comprehensive testing strategy
+│   └── DOCKER_VS_NPM.md        # Architecture decision docs
 ├── README.md                    # This file
 ├── CONTRIBUTING.md              # Contribution guidelines
 ├── SECURITY.md                  # Security policy
@@ -191,8 +190,7 @@ LiteLLM-MCP-Server/
 ├── .gitignore                   # Git ignore rules
 ├── package.json                 # Node.js package metadata
 ├── tsconfig.json                # TypeScript configuration
-├── Dockerfile                   # Container build config (Node.js)
-└── pyproject.toml               # Legacy Python metadata (deprecated)
+└── Dockerfile                   # Container build config
 ```
 
 ## 🔐 Security

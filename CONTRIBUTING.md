@@ -15,7 +15,8 @@ We are committed to providing a welcoming and inclusive environment. All contrib
 
 ### Prerequisites
 
-- Python 3.11+
+- Node.js 18+
+- npm or yarn
 - Docker & Docker Compose
 - Git
 - Running LiteLLM instance for testing
@@ -34,20 +35,19 @@ We are committed to providing a welcoming and inclusive environment. All contrib
    ```
 4. Set up development environment:
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r mcp_server/requirements.txt
+   npm install
    ```
 
 ## Development Workflow
 
 ### Code Style
 
-- Follow PEP 8 guidelines
-- Use type hints for all functions
-- Write descriptive docstrings
+- Follow TypeScript/JavaScript best practices
+- Use TypeScript strict mode
+- Write descriptive JSDoc comments
 - Maximum line length: 100 characters
 - Use meaningful variable names
+- Use ESLint and Prettier for code formatting
 
 ### Testing
 
@@ -55,13 +55,39 @@ Before submitting a pull request:
 
 ```bash
 # Test your changes with a running LiteLLM instance
-docker exec litellm_mcp python __main__.py
+npm test
 
-# Check for common issues
-python -m pylint mcp_server/
+# Check for linting issues
+npm run lint
 
 # Format code
-python -m black mcp_server/
+npm run format
+
+# Build the project
+npm run build
+```
+
+### Commit Messages
+
+Use clear, descriptive commit messages following conventional commits:
+
+```
+feat: Add new feature description
+fix: Fix bug description
+docs: Update documentation
+chore: Maintenance tasks
+refactor: Code refactoring
+test: Add/update tests
+security: Security-related changes
+```
+
+Examples:
+
+```
+feat: Add user spend tracking endpoint
+fix: Handle timeout in API calls gracefully
+docs: Update deployment guide with examples
+security: Sanitize environment variable logging
 ```
 
 ### Commit Messages
@@ -91,7 +117,7 @@ security: Sanitize environment variable logging
 
 ### Step-by-Step Process
 
-1. **Fork & Branch**: Create a feature branch from `001-mcp-litellm-server`
+1. **Fork & Branch**: Create a feature branch from `main`
    ```bash
    git checkout -b feature/your-feature
    ```
@@ -99,7 +125,7 @@ security: Sanitize environment variable logging
 2. **Make Changes**: Implement your feature or fix
    - Keep commits atomic and focused
    - Update documentation if needed
-   - Add comments for complex logic
+   - Add JSDoc comments for complex logic
 
 3. **Test Thoroughly**:
    - Test with your LiteLLM instance
@@ -168,7 +194,8 @@ What actually happens
 
 ## Environment
 - OS: 
-- Python: 
+- Node.js: 
+- npm: 
 - Docker: 
 - LiteLLM version: 
 
@@ -204,27 +231,25 @@ Updates to documentation are as important as code changes!
 
 ### Documentation Standards
 
-```python
-def create_virtual_key(key_alias: str, user_id: str) -> dict:
-    """
-    Create a new virtual API key.
-    
-    Args:
-        key_alias: Friendly name for the key (e.g., 'production-api')
-        user_id: User identifier to associate with the key
-        
-    Returns:
-        Dictionary containing the new API key and metadata
-        
-    Raises:
-        ValueError: If key_alias or user_id is empty
-        ConnectionError: If unable to connect to LiteLLM API
-        
-    Example:
-        >>> key = create_virtual_key('my-key', 'user-123')
-        >>> print(key['key'])
-        sk-xxxxx...
-    """
+```typescript
+/**
+ * Create a new virtual API key.
+ * 
+ * @param keyAlias - Friendly name for the key (e.g., 'production-api')
+ * @param userId - User identifier to associate with the key
+ * @returns Promise resolving to object containing the new API key and metadata
+ * @throws {Error} If keyAlias or userId is empty or API call fails
+ * 
+ * @example
+ * ```typescript
+ * const key = await createVirtualKey('my-key', 'user-123');
+ * console.log(key.key);
+ * // sk-xxxxx...
+ * ```
+ */
+async function createVirtualKey(keyAlias: string, userId: string): Promise<VirtualKeyResponse> {
+  // Implementation here
+}
 ```
 
 ## Code Review Process

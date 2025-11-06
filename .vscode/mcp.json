@@ -13,7 +13,7 @@
       ],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",
-        "LITELLM_MASTER_KEY": "sk-peaceispossible-0812=",
+        "LITELLM_MASTER_KEY": "sk-rQW44mXGQ1rPc3vHoHQ7_w",
         "DATABASE_URL": "postgresql://user:password@localhost:5432/litellm_db",
         "REDIS_HOST": "localhost",
         "REDIS_PORT": "6379",

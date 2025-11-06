@@ -1,0 +1,25 @@
+{
+  "servers": {
+    "litellm-manager": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "litellm_mcp",
+        "python",
+        "-m",
+        "mcp_server"
+      ],
+      "env": {
+        "LITELLM_API_BASE": "http://localhost:4001",
+        "LITELLM_MASTER_KEY": "sk-peaceispossible-0812=",
+        "DATABASE_URL": "postgresql://user:password@localhost:5432/litellm_db",
+        "REDIS_HOST": "localhost",
+        "REDIS_PORT": "6379",
+        "REDIS_PASSWORD": "redis_password_litellm",
+        "DEBUG": "true"
+      }
+    }
+  }
+}

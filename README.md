@@ -21,29 +21,52 @@ A powerful Model Context Protocol (MCP) server written in TypeScript that enable
 
 ## 🔧 Installation
 
-### 1. Clone the Repository
+### Option 1: Install from npm (Recommended)
+
+```bash
+npm install -g litellm-mcp-server
+```
+
+This will install the MCP server globally and make the `litellm-mcp-server` command available in your terminal.
+
+### Option 2: Install from Source
+
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ArtemisAI/LiteLLM-MCP-Server.git
 cd LiteLLM-MCP-Server
 ```
 
-### 2. Install Dependencies (for local development)
+#### 2. Install Dependencies
 
 ```bash
 npm install
 npm run build
 ```
 
-### 3. Configure Environment
+## ⚙️ Configuration
 
-Copy the example configuration and update with your credentials:
+### 1. Configure Environment
 
-```bash
-cp .vscode/mcp.json.example .vscode/mcp.json
+Create or edit your `.vscode/mcp.json` file with your LiteLLM proxy details:
+
+**For npm global installation (Recommended):**
+```json
+{
+  "servers": {
+    "litellm-manager": {
+      "type": "stdio",
+      "command": "litellm-mcp-server",
+      "env": {
+        "LITELLM_API_BASE": "http://localhost:4001",
+        "LITELLM_MASTER_KEY": "sk-your-api-key",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
 ```
-
-Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 
 **For Docker deployment:**
 ```json
@@ -63,7 +86,7 @@ Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 }
 ```
 
-**For local Node.js deployment:**
+**For local Node.js deployment from source:**
 ```json
 {
   "servers": {
@@ -81,13 +104,13 @@ Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 }
 ```
 
-### 4. Build Docker Image (Optional)
+### 2. Build Docker Image (Optional)
 
 ```bash
 docker build -t litellm_mcp:latest .
 ```
 
-### 5. Run Container (Optional)
+### 3. Run Container (Optional)
 
 ```bash
 docker run -d --name litellm_mcp \
@@ -97,7 +120,7 @@ docker run -d --name litellm_mcp \
   litellm_mcp:latest sleep infinity
 ```
 
-### 6. Enable in VSCode
+### 4. Enable in VSCode
 
 The MCP server will automatically connect when configured in `.vscode/mcp.json`. VSCode will discover and register the following tools available in Claude:
 

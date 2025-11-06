@@ -1,0 +1,45 @@
+# Source files
+src/
+
+# Test files
+tests/
+
+# Feature development docs
+feat-dev/
+
+# API documentation
+docs/
+
+# Configuration files
+tsconfig.json
+.gitignore
+.vscode/
+
+# Git files
+.git/
+.github/
+
+# SQL files
+*.sql
+
+# Development files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build artifacts (keep only necessary dist files)
+*.map
+
+# Documentation that shouldn't be in npm package
+CONTRIBUTING.md
+DEPLOYMENT.md
+NPM_PUBLISH_PLAN.md
+Dockerfile
+
+# IDE files
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

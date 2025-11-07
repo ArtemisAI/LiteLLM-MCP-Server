@@ -1,0 +1,83 @@
+# Source files# Source files
+
+src/src/
+
+
+
+# Test files# Test files
+
+tests/tests/
+
+
+
+# Feature development docs# Configuration files
+
+feat-dev/tsconfig.json
+
+.gitignore
+
+# API documentation.npmignore
+
+docs/
+
+# Development files
+
+# Configuration files*.log
+
+tsconfig.json*.tsbuildinfo
+
+.gitignore
+
+.vscode/# Documentation (keep README, LICENSE, CHANGELOG)
+
+feat-dev/
+
+# Git filesdocs/
+
+.git/*.md
+
+.github/!README.md
+
+!CHANGELOG.md
+
+# SQL files!LICENSE
+
+*.sql
+
+# Git and GitHub
+
+# Development files.github/
+
+*.log.git/
+
+npm-debug.log*
+
+yarn-debug.log*# IDE files
+
+yarn-error.log*.vscode/
+
+.idea/
+
+# Build artifacts (keep only necessary dist files)
+
+*.map# OS files
+
+.DS_Store
+
+# Documentation that shouldn't be in npm packageThumbs.db
+
+CONTRIBUTING.md
+
+DEPLOYMENT.md# Database test files
+
+Dockerfile*.sql
+
+
+
+# IDE files# Build artifacts (will be included via prepare script)
+
+.idea/# dist/ - intentionally not ignored, will be built during publish
+*.swp
+*.swo
+*~
+.DS_Store

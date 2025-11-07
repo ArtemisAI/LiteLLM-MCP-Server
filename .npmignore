@@ -1,0 +1,40 @@
+# Source files
+src/
+
+# Test files
+tests/
+
+# Configuration files
+tsconfig.json
+.gitignore
+.npmignore
+
+# Development files
+*.log
+*.tsbuildinfo
+
+# Documentation (keep README, LICENSE, CHANGELOG)
+feat-dev/
+docs/
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE
+
+# Git and GitHub
+.github/
+.git/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database test files
+*.sql
+
+# Build artifacts (will be included via prepare script)
+# dist/ - intentionally not ignored, will be built during publish

@@ -21,16 +21,19 @@ A powerful Model Context Protocol (MCP) server written in TypeScript that enable
 
 ## 🔧 Installation
 
-### 1. Clone the Repository
+### Option 1: Install from npm (Recommended)
+
+```bash
+npm install -g litellm-mcp-server
+```
+
+This installs the pre-built executable globally on your system.
+
+### Option 2: Clone and Build from Source
 
 ```bash
 git clone https://github.com/ArtemisAI/LiteLLM-MCP-Server.git
 cd LiteLLM-MCP-Server
-```
-
-### 2. Install Dependencies (for local development)
-
-```bash
 npm install
 npm run build
 ```

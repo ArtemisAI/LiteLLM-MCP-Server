@@ -268,13 +268,41 @@ Reviewers may request changes. Please address them promptly.
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
 
+## 💰 Support the Project
+
+If you find this project useful, please consider supporting it:
+
+### Ways to Support
+
+**Financial Support:**
+- 🤍 **GitHub Sponsors**: [github.com/sponsors/ArtemisAI](https://github.com/sponsors/ArtemisAI)
+- ☕ **Ko-fi**: [ko-fi.com/artemisai](https://ko-fi.com/artemisai)
+- 💳 **Buy Me a Coffee**: [buymeacoffee.com/artemisai](https://buymeacoffee.com/artemisai)
+
+**Community Support:**
+- ⭐ **Star on GitHub** - Help others discover the project
+- 🔗 **Share** - Tell others about `litellm-mcp`
+- 💬 **Engage** - Participate in discussions
+- 🐛 **Report Issues** - Help find and fix bugs
+- 🤝 **Contribute** - Submit code improvements
+
+### Sponsor Benefits
+
+GitHub Sponsors receive:
+- 💌 Direct support from maintainers
+- 🎯 Priority bug fixes
+- 📧 Monthly development updates
+- 🏆 Recognition in README
+
 ## Questions or Need Help?
 
 Feel free to:
 
 - 📖 Check [README.md](README.md) and [DEPLOYMENT.md](DEPLOYMENT.md)
+- 🔐 Review [SECURITY.md](SECURITY.md) for security guidelines
 - 💬 Open a GitHub Discussion
 - 🐛 Create an issue for clarification
 - 📧 Email: contributors@artemisai.com
+- 🔗 Visit: [artemis-ai.ca](https://artemis-ai.ca)
 
-Thank you for contributing! 🙏
+Thank you for contributing and supporting! 🙏

@@ -21,15 +21,42 @@ A powerful Model Context Protocol (MCP) server written in TypeScript that enable
 
 ## 🔧 Installation
 
-### Option 1: Install from npm (Recommended)
+### Option 1: Install from npm (Recommended) ⭐
 
 ```bash
 npm install -g litellm-mcp
 ```
 
-This installs the pre-built executable globally on your system.
+This installs the pre-built executable globally on your system. After installation, configure it in your VSCode settings:
 
-### Option 2: Clone and Build from Source
+```json
+{
+  "servers": {
+    "mcp-litellm": {
+      "type": "stdio",
+      "command": "litellm-mcp",
+      "args": [],
+      "env": {
+        "LITELLM_API_BASE": "http://localhost:4001",
+        "LITELLM_MASTER_KEY": "sk-your-api-key",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+### Option 2: Docker Deployment
+
+```bash
+docker build -t litellm-mcp:latest .
+docker run -d --name litellm-mcp \
+  -e LITELLM_API_BASE=http://litellm:4000 \
+  -e LITELLM_MASTER_KEY=sk-your-key \
+  litellm-mcp:latest
+```
+
+### Option 3: Clone and Build from Source
 
 ```bash
 git clone https://github.com/ArtemisAI/LiteLLM-MCP-Server.git
@@ -38,24 +65,18 @@ npm install
 npm run build
 ```
 
-### 3. Configure Environment
+### 4. Configure Environment
 
-Copy the example configuration and update with your credentials:
+Edit `.vscode/mcp.json` with your LiteLLM proxy details and credentials.
 
-```bash
-cp .vscode/mcp.json.example .vscode/mcp.json
-```
-
-Edit `.vscode/mcp.json` with your LiteLLM proxy details:
-
-**For Docker deployment:**
+**For npm installation:**
 ```json
 {
   "servers": {
     "litellm-manager": {
       "type": "stdio",
-      "command": "docker",
-      "args": ["exec", "-i", "litellm_mcp", "node", "dist/index.js"],
+      "command": "litellm-mcp",
+      "args": [],
       "env": {
         "LITELLM_API_BASE": "http://localhost:4001",
         "LITELLM_MASTER_KEY": "sk-your-api-key",
@@ -66,43 +87,9 @@ Edit `.vscode/mcp.json` with your LiteLLM proxy details:
 }
 ```
 
-**For local Node.js deployment:**
-```json
-{
-  "servers": {
-    "litellm-manager": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["/path/to/LiteLLM-MCP-Server/dist/index.js"],
-      "env": {
-        "LITELLM_API_BASE": "http://localhost:4001",
-        "LITELLM_MASTER_KEY": "sk-your-api-key",
-        "DEBUG": "false"
-      }
-    }
-  }
-}
-```
+### 5. Enable in VSCode
 
-### 4. Build Docker Image (Optional)
-
-```bash
-docker build -t litellm_mcp:latest .
-```
-
-### 5. Run Container (Optional)
-
-```bash
-docker run -d --name litellm_mcp \
-  --network litellm_litellm_network \
-  -e LITELLM_API_BASE=http://litellm-llm-1:4000 \
-  -e LITELLM_MASTER_KEY=sk-your-key \
-  litellm_mcp:latest sleep infinity
-```
-
-### 6. Enable in VSCode
-
-The MCP server will automatically connect when configured in `.vscode/mcp.json`. VSCode will discover and register the following tools available in Claude:
+The MCP server will automatically connect when configured. VSCode will discover and register the following tools available in Claude.
 
 ## 🛠️ Available Tools
 
@@ -213,6 +200,34 @@ This project handles sensitive information including API keys and database crede
 If you discover a security vulnerability, **do not open a public issue**. Instead, email: **security@artemisai.com**
 
 See [SECURITY.md](SECURITY.md) for detailed security policies and procedures.
+
+## 💰 Support the Project
+
+If you find this project valuable, please consider supporting its development:
+
+### Sponsor the Project
+
+Your support helps us maintain and improve `litellm-mcp`:
+
+- **💚 [GitHub Sponsors](https://github.com/sponsors/ArtemisAI)** - Recurring monthly support
+- **☕ [Ko-fi](https://ko-fi.com/artemisai)** - One-time donations
+- **💳 [Buy Me a Coffee](https://buymeacoffee.com/artemisai)** - Quick contributions
+
+### Other Ways to Help
+
+- ⭐ **Star on GitHub** - Increase project visibility
+- 🐦 **Share** - Tell your network about litellm-mcp
+- 🐛 **Report Issues** - Help improve the project
+- 🤝 **Contribute** - Submit pull requests
+- 📣 **Feedback** - Share your use cases and suggestions
+
+**Sponsors receive:**
+- 🎁 Exclusive updates and early access to new features
+- 🏆 Recognition in the README and GitHub
+- 💌 Direct communication with maintainers
+- 🎯 Priority for feature requests
+
+---
 
 ## 🤝 Contributing
 

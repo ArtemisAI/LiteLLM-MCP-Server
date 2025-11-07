@@ -24,7 +24,7 @@ A powerful Model Context Protocol (MCP) server written in TypeScript that enable
 ### Option 1: Install from npm (Recommended)
 
 ```bash
-npm install -g litellm-mcp-server
+npm install -g litellm-mcp
 ```
 
 This installs the pre-built executable globally on your system.

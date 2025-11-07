@@ -1,11 +1,11 @@
 {
-  "name": "litellm-mcp-server",
+  "name": "litellm-mcp",
   "version": "1.0.0",
   "description": "MCP server for managing LiteLLM proxy instances through Claude AI",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "litellm-mcp-server": "dist/index.js"
+    "litellm-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

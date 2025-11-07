@@ -14,8 +14,16 @@ tsconfig.json
 *.tsbuildinfo
 
 # Documentation (keep README, LICENSE, CHANGELOG)
+# Development documentation - NEVER published
 feat-dev/
 docs/
+DEVELOPMENT.md
+AGENTS.md
+copilot-instructions.md
+BRANCH_STRATEGY.md
+DEPLOYMENT.md
+CONTRIBUTING.md
+SECURITY.md
 *.md
 !README.md
 !CHANGELOG.md

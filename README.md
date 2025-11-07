@@ -207,7 +207,7 @@ This project handles sensitive information including API keys and database crede
 
 ### Reporting Security Issues
 
-If you discover a security vulnerability, **do not open a public issue**. Instead, email: **security@artemisai.com**
+If you discover a security vulnerability, **do not open a public issue**. Instead, email: **daniel@artemis-ai.ca**
 
 See [SECURITY.md](SECURITY.md) for detailed security policies and procedures.
 
@@ -275,7 +275,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📖 **Documentation**: [DEPLOYMENT.md](DEPLOYMENT.md)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/ArtemisAI/LiteLLM-MCP-Server/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/ArtemisAI/LiteLLM-MCP-Server/discussions)
-- 📧 **Email**: support@artemisai.com
+- 📧 **Email**: daniel@artemis-ai.ca
+- 🔗 **Website**: www.artemis-ai.ca
 
 ## 🙏 Acknowledgments
 

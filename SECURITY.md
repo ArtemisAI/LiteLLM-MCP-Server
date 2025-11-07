@@ -281,7 +281,7 @@ Configure rate limits in LiteLLM:
 
 If you discover a security vulnerability, **do not create a public GitHub issue**.
 
-Instead, email: **security@artemisai.com**
+Instead, email: **daniel@artemis-ai.ca**
 
 Please include:
 - **Description**: What is the vulnerability?
@@ -353,9 +353,9 @@ Before deploying to production:
 
 ## 📞 Contact
 
-- **Security Issues**: security@artemisai.com
-- **General Support**: support@artemisai.com
+- **Security Issues**: daniel@artemis-ai.ca
 - **GitHub Issues**: [GitHub Issues](https://github.com/ArtemisAI/LiteLLM-MCP-Server/issues)
+- **Website**: www.artemis-ai.ca
 
 ---
 

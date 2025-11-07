@@ -273,8 +273,10 @@ By contributing, you agree that your contributions will be licensed under the MI
 Feel free to:
 
 - 📖 Check [README.md](README.md) and [DEPLOYMENT.md](DEPLOYMENT.md)
-- 💬 Open a GitHub Discussion
+- � Review [SECURITY.md](SECURITY.md) for security guidelines
+- �💬 Open a GitHub Discussion
 - 🐛 Create an issue for clarification
-- 📧 Email: contributors@artemisai.com
+- 📧 Email: daniel@artemis-ai.ca
+- 🔗 Visit: www.artemis-ai.ca
 
-Thank you for contributing! 🙏
+Thank you for contributing and supporting! 🙏

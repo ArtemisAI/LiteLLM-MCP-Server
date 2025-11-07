@@ -4,103 +4,148 @@
 
 This document provides strict guidelines for AI agents (Copilot, Claude, etc.) working on the LiteLLM MCP Server development.
 
-## 🎯 Core Principles
+## 🎯 Core Principles - FORK-BASED WORKFLOW
 
-1. **Two-Branch Strategy:**
-   - `main` = Production (PUBLIC, users download from npm)
-   - `develop` = Development (PRIVATE, team-only work)
+1. **Fork-Based Development:**
+   - `YOUR_FORK/main` = Your copy of production (synced from upstream)
+   - `YOUR_FORK/develop` = Your development work
+   - `upstream/main` = Original production (ArtemisAI - read-only)
+   - `upstream/develop` = Original development (ArtemisAI - read-only)
 
-2. **Never Break the Barrier:**
-   - ❌ NEVER merge develop → main without explicit user approval
-   - ❌ NEVER publish to npm from develop
-   - ❌ NEVER expose feat-dev/ or internal docs to main
-   - ✅ ALWAYS keep development work isolated
+2. **Safety Rules for Forks:**
+   - ✅ Push to YOUR fork freely: `git push origin ...`
+   - ✅ Create PRs in your fork: `feature/* → YOUR_FORK/develop`
+   - ✅ Contribute via PR: YOUR_FORK/develop → upstream/develop
+   - ❌ NEVER push to upstream (you don't have access)
+   - ❌ NEVER commit secrets to fork (it may become public)
+   - ❌ ALWAYS sync upstream before major work
 
 3. **Protect Production:**
-   - main branch must remain clean, stable, and production-ready
-   - No experimental code on main
-   - All testing happens on develop/feature branches first
+   - upstream/main is SACRED (production code only)
+   - Your fork can be messy - it's learning space!
+   - Only contribute polished code via PRs to upstream
 
-## 📋 Mandatory Workflow
+## 📋 Mandatory Workflow - FORK-BASED
 
 ### Before Starting ANY Work
 
 ```bash
-# 1. Verify you're on develop
+# 1. Check your remotes (should show origin=YOUR_FORK, upstream=ArtemisAI)
+git remote -v
+
+# 2. Verify you're on develop
 git branch -a
+# Must see: * develop (YOUR_FORK develop)
 
-# 2. Must see: * develop (with arrow indicating local HEAD)
-# If on main, STOP and run: git checkout develop
+# 3. Sync with upstream before major work
+git fetch upstream
+git merge upstream/develop
 
-# 3. Update from remote
-git pull origin develop
+# 4. Push updated develop to your fork
+git push origin develop
 
-# 4. Verify feat-dev/ folder exists
+# 5. Verify feat-dev/ folder exists
 ls feat-dev/  # Should list 24 development files
 ```
 
-### Creating a Feature
+### Creating a Feature (In Your Fork)
 
 ```bash
 # ✅ CORRECT WAY
-git checkout develop                          # Start from develop
+git checkout develop                          # Start from YOUR develop
+git pull origin develop                       # Get latest from your fork
 git checkout -b feature/your-feature          # Create feature branch
 # ... make changes ...
 git add .
 git commit -m "feat: Description"
-git push -u origin feature/your-feature
+git push -u origin feature/your-feature       # Push to YOUR fork
+
+# Then create PR on GitHub:
+# FROM: YOUR_FORK/feature/your-feature
+# TO: YOUR_FORK/develop
+# (NOT to ArtemisAI yet!)
 
 # ❌ WRONG WAYS (DO NOT DO)
-git checkout main                             # ❌ Never start from main
-git checkout -b feature/your-feature
-# ... this would merge feature to main, DISASTER!
+git checkout upstream/main                    # ❌ Wrong base
+git checkout upstream/develop                 # ❌ Can't push here
 
-git checkout main
-git commit -m "feat: Description"             # ❌ Never commit directly to main
-# ... this commits production code directly, DISASTER!
+git push upstream feature/your-feature        # ❌ Access denied
+# You don't have push access to upstream!
 ```
 
-### Merging to Develop
+### Merging Within Your Fork
 
 ```bash
-# ✅ CORRECT
-1. Push feature branch: git push -u origin feature/your-feature
-2. Create PR on GitHub: feature/your-feature → develop
-3. Get review/approval
-4. Merge on GitHub (deletes feature branch)
-5. Local: git checkout develop && git pull origin develop
+# ✅ CORRECT (in your fork)
+1. Create PR: YOUR_FORK/feature/* → YOUR_FORK/develop
+2. Review and merge on GitHub UI
+3. Delete feature branch
+4. Pull updated develop locally:
+   git checkout develop
+   git pull origin develop
+5. Continue development
 
 # ❌ WRONG
-git merge feature/your-feature                # ❌ Merging locally
-git push origin develop                       # ❌ Then pushing - risky!
+git push upstream develop                     # ❌ Access denied
+```
+
+### When Ready to Contribute to ArtemisAI
+
+```bash
+# 1. Make sure your develop is synced with upstream
+git fetch upstream
+git merge upstream/develop
+git push origin develop
+
+# 2. Create PR on GitHub:
+# FROM: YOUR_FORK/develop
+# TO: ArtemisAI/LiteLLM-MCP-Server/develop
+# (This is a cross-fork PR!)
+
+# 3. Wait for ArtemisAI team to review
+# 4. Address feedback if needed
+# 5. Team merges when approved
+
+# 6. Sync your fork after merge
+git fetch upstream
+git merge upstream/develop
+git push origin develop
 ```
 
 ## 🔒 The Forbidden Zone (DO NOT TOUCH)
 
-### Never Modify These Files Directly
-```
-main branch
-├── src/index.ts (only merge via PR)
-├── package.json version (only via release PR)
-├── CHANGELOG.md (only via release PR)
-└── Any production-critical files
-```
-
-### Never Push Directly To
+### Never Push To Upstream (You Don't Have Access)
 
 ```bash
-# These commands will be BLOCKED by branch protection:
-git push origin main                    # ❌ BLOCKED - use PR instead
-git push -f origin main                 # ❌ BLOCKED - force push blocked
-git push -f origin develop              # ❌ BLOCKED on develop too
+# These commands will FAIL - you don't have push access:
+git push upstream feature/your-feature        # ❌ Permission denied
+git push upstream main                        # ❌ Permission denied
+git push upstream develop                     # ❌ Permission denied
 
-# ✅ ALWAYS use PR workflow:
-# 1. Create branch (feature/*, bugfix/*, etc.)
-# 2. Push feature branch
-# 3. Create PR on GitHub
-# 4. Get review
-# 5. Merge via GitHub UI (safe)
+# ✅ ALWAYS push to origin (your fork):
+git push origin feature/your-feature          # ✅ Success - to your fork
+git push origin develop                       # ✅ Success - to your fork
+
+# ✅ Contribute via PR only:
+# Go to GitHub and create a PR:
+# FROM: YOUR_FORK/develop (or YOUR_FORK/feature/*)
+# TO: ArtemisAI/develop
+# This is the ONLY way to contribute code to upstream
 ```
+
+### Never Commit These to Your Fork
+
+```
+NEVER commit to your fork:
+├── Hardcoded API keys
+├── Passwords or credentials
+├── Personal information
+├── Database backups
+├── Large binary files
+└── Any secrets (use .env files instead)
+```
+
+Even though your fork is "yours", if you ever make it public or give access to others, secrets are exposed!
 
 ## 📦 What Gets Published to npm
 
@@ -157,50 +202,48 @@ Before pushing ANY code:
 - [ ] Commit message is descriptive? (`feat:`, `fix:`, `docs:`, etc.)
 - [ ] PR description explains what/why? (for code review)
 
-## 📊 Branch Status Reference
+## 📊 Repository Structure Reference
 
 ```
-main (3e3f1ba)
-├─ Status: ✅ PRODUCTION READY
-├─ Version: v1.0.0
-├─ Published: Yes (on npm)
-├─ Protection: 🔒 HIGH (PRs required, reviews required)
-└─ Last commit: "fix: Correct contact information..."
+UPSTREAM (ArtemisAI/LiteLLM-MCP-Server) ← Read-only for you
+├── main (v1.0.0) - PRODUCTION
+├── develop - Team development
+└── feature/* - Team features
 
-develop (3329b41)
-├─ Status: ✅ READY FOR DEVELOPMENT
-├─ Version: v1.0.1-dev (unreleased)
-├─ Published: No (kept private)
-├─ Protection: 🔒 MEDIUM (PRs recommended)
-├─ Contains: feat-dev/ (24 docs), TypeScript code
-└─ Last commit: "docs: Add branch strategy..."
+YOUR FORK (YOUR_USERNAME/LiteLLM-MCP-Server) ← You have full access
+├── main - Synced from upstream/main
+├── develop - Your development work
+└── feature/* - Your feature branches
+
+REMOTES in your local repo:
+├── origin → YOUR_FORK (where you push)
+└── upstream → ArtemisAI (where you pull/PR to)
 ```
 
-## 🔄 Release Process (For Humans Only)
+## 🔄 Release Process (For ArtemisAI Team Only)
 
-Only authorized users perform releases:
+Only authorized ArtemisAI maintainers perform releases to npm:
 
 ```bash
-# 1. Develop stable feature on develop branch
-git checkout develop
-git pull origin develop
-# ... create feature branch, develop, merge via PR ...
+# This happens in the UPSTREAM repo, not your fork
 
-# 2. When ready for release:
-git checkout -b release/v1.0.1
-npm version minor                              # Updates version
-git add package*.json
-git commit -m "chore: Bump to v1.0.1"
-git push -u origin release/v1.0.1
+# 1. Merge develop → main PR is approved
+# 2. Tag created: v1.0.1
+# 3. npm publish runs (automated or manual)
 
-# 3. Create PR: release/v1.0.1 → main
-# 4. After approval, merge
-# 5. Create git tag: v1.0.1
-# 6. npm publish (or automatic via GitHub Actions)
-# 7. Merge back to develop
-```
+# YOUR ROLE:
+# ✅ Create high-quality PRs to upstream/develop
+# ✅ Address review feedback
+# ✅ Help test before merge
+# ✅ Wait for team to manage releases
 
-**Agents:** Do not perform releases. Releases are human-only operations.
+# YOUR LIMITS:
+# ❌ Don't create PRs to main (only ArtemisAI team does)
+# ❌ Don't bump versions in your fork
+# ❌ Don't publish to npm (no access)
+# ❌ Don't manage releases
+
+**Agents:** Do not perform releases. Releases are human-only, ArtemisAI-team-only operations.
 
 ## 🛡️ Safety Nets
 
